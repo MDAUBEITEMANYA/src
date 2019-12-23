@@ -27,14 +27,18 @@ public class PartyGoer {
         return partyPlace;
     }
 
-    public synchronized void setPartyPlace(String partyPlace) {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            System.out.println("Interrupted");
+    public void setPartyPlace(String partyPlace) {
+        boolean isHouse;
+        synchronized (this) {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                System.out.println("Interrupted");
+            }
+            this.partyPlace = partyPlace;
+            isHouse = partyPlace.equals(house);
         }
-        this.partyPlace = partyPlace;
-        if (partyPlace.equals(house)) { //this PartyGoer wanna sit at home today
+        if (isHouse) { //this PartyGoer wanna sit at home today
             leader.refuseChilling(this); //so he/she need to tell his/her leader about this purpose
         }
     }

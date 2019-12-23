@@ -19,8 +19,12 @@ public class Leader {
         partyGoers.remove(partyGoer); //okay then, the person is deleted from Party-goers company today;
     }
 
-    public synchronized void printLocations() {
-        for (PartyGoer partyGoer : partyGoers) {
+    public  void printLocations() {
+        Set<PartyGoer> copyOfSet;
+        synchronized (this){
+            copyOfSet = new HashSet<>(partyGoers);
+        }
+        for (PartyGoer partyGoer : copyOfSet) {
             System.out.println(partyGoer.getPartyPlace());
         }
     }
